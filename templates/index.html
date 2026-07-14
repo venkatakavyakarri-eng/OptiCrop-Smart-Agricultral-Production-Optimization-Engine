@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OptiCrop - Smart Crop Prediction System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- ==========================
+         NAVBAR
+    =========================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🌱 OptiCrop
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#predict">Predict</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+    </nav>
+
+
+    <!-- ==========================
+         HERO SECTION
+    =========================== -->
+
+    <section id="home" class="hero">
+
+        <div class="hero-content">
+
+            <h1>🌾 Smart Crop Prediction System</h1>
+
+            <p>
+                AI-Based Crop Recommendation Using Soil Nutrients,
+                Temperature, Humidity, pH and Rainfall.
+            </p>
+
+            <a href="#predict" class="btn">
+                🌱 Start Prediction
+            </a>
+
+        </div>
+
+    </section>
+        <!-- ==========================
+         PREDICTION SECTION
+    =========================== -->
+
+    <section id="predict" class="prediction-section">
+
+        <div class="container">
+
+            <h1>🌾 Crop Prediction</h1>
+
+            <p class="prediction-text">
+                Enter the soil nutrients and weather conditions to get the best crop recommendation.
+            </p>
+
+            <form action="{{ url_for('predict') }}" method="POST" class="predict-form">
+
+                <div class="input-group">
+
+                    <label for="N">🌱 Nitrogen (N)</label>
+                    <input type="number" id="N" name="N" step="any" required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="P">🌱 Phosphorus (P)</label>
+                    <input type="number" id="P" name="P" step="any" required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="K">🌱 Potassium (K)</label>
+                    <input type="number" id="K" name="K" step="any" required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="temperature">🌡️ Temperature (°C)</label>
+                    <input type="number" id="temperature" name="temperature" step="any" required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="humidity">💧 Humidity (%)</label>
+                    <input type="number" id="humidity" name="humidity" step="any" required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="ph">🧪 Soil pH</label>
+                    <input type="number" id="ph" name="ph" step="any" required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="rainfall">🌧️ Rainfall (mm)</label>
+                    <input type="number" id="rainfall" name="rainfall" step="any" required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <button type="submit" class="predict-btn">
+                        🌱 Predict Crop
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+    <!-- ==========================
+     PREDICTION RESULT
+========================== -->
+
+{% if prediction %}
+
+<section class="result-section">
+
+    <div class="result-card">
+
+        <h1>🌿 Prediction Result</h1>
+
+        <h2>
+            Recommended Crop:
+            <span class="crop-name">{{ prediction }}</span>
+        </h2>
+
+        <!-- Crop Image -->
+
+        {% if image_name %}
+        <img
+            src="{{ url_for('static', filename=image_name) }}"
+            alt="{{ prediction }}"
+            class="crop-image"
+            onerror="this.onerror=null; this.src='{{ url_for('static', filename='default.jpg') }}';"
+        >
+        {% endif %}
+
+        <!-- Crop Details -->
+
+        {% if details %}
+
+        <div class="crop-info">
+
+            <h2>🌱 Crop Details</h2>
+
+            <p><strong>📅 Season:</strong> {{ details.season }}</p>
+
+            <p><strong>🌍 Soil:</strong> {{ details.soil }}</p>
+
+            <p><strong>🌡 Temperature:</strong> {{ details.temperature }}</p>
+
+            <p><strong>🌧 Rainfall:</strong> {{ details.rainfall }}</p>
+
+            <p><strong>💧 Water Requirement:</strong> {{ details.water }}</p>
+
+            <p><strong>🌱 Fertilizer:</strong> {{ details.fertilizer }}</p>
+
+            <p><strong>⭐ Benefits:</strong> {{ details.benefits }}</p>
+
+            <p><strong>📖 Description:</strong> {{ details.description }}</p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endif %}
+<!-- ==========================
+     FEATURES SECTION
+========================== -->
+
+<section id="features" class="features">
+
+    <div class="container">
+
+        <h1>🌱 Smart Features</h1>
+
+        <div class="feature-container">
+
+            <div class="feature-card">
+                <h2>🤖 AI Prediction</h2>
+                <p>
+                    Machine Learning predicts the most suitable crop
+                    based on soil nutrients and climate conditions.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h2>🌾 Crop Information</h2>
+                <p>
+                    Displays complete crop details including season,
+                    soil type, fertilizer, water requirement and benefits.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h2>🌍 Smart Farming</h2>
+                <p>
+                    Helps farmers select the best crop and improve
+                    productivity using AI.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h2>📊 Accurate Analysis</h2>
+                <p>
+                    Uses Nitrogen, Phosphorus, Potassium,
+                    Temperature, Humidity, pH and Rainfall values.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================
+     ABOUT SECTION
+========================== -->
+
+<section id="about" class="about">
+
+    <div class="container">
+
+        <h1>About OptiCrop</h1>
+
+        <p>
+            OptiCrop is an AI-powered Smart Crop Prediction System
+            developed using Machine Learning and Flask.
+            It recommends the most suitable crop by analyzing
+            soil nutrients and environmental conditions.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================
+     CONTACT SECTION
+========================== -->
+
+<section id="contact" class="contact">
+
+    <div class="container">
+
+        <h1>Contact</h1>
+
+        <p>🌱 Smart Agriculture Solution</p>
+
+        <p>📧 Email : opticrop@gmail.com</p>
+
+        <p>📱 Phone : +91 9876543210</p>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================
+     FOOTER
+========================== -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 OptiCrop | Smart Crop Prediction System |
+        Developed using Flask & Machine Learning
+    </p>
+
+</footer>
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
